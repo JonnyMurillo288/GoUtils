@@ -21,9 +21,10 @@ func AllCombo(arr []int) [][]int {
 		fmt.Println("arr",arr)
 		fmt.Println("\n",i)
 		if !InIntArrArr(all,new) {
-			all = append(all,new)
+			newAll := append(all,new)
 			fmt.Println("all appended:",all)
 			time.Sleep(time.Second*5)
+			all = newAll
 			continue
 		}
 		i--
