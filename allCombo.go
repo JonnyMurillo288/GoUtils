@@ -20,8 +20,8 @@ func AllCombo(arr []int) [][]int {
 		fmt.Println("all:",all)
 		fmt.Println("new:",new)
 		fmt.Println("arr",arr)
-		all = append(all,new)
 		if !InIntArrArr(all,new) {
+			all = append(all,new)
 			fmt.Println("all appended:",all)
 			time.Sleep(time.Second*5)
 		}
