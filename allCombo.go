@@ -19,9 +19,9 @@ func AllCombo(arr []int) [][]int {
 		fmt.Println(arr)
 		fmt.Print("\n\n")
 		if !InIntArrArr(all,arr) {
-			i--
 			all = append(all,arr)
 		}
+		i--
 	}
 	return all
 }
