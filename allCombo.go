@@ -13,8 +13,9 @@ func AllCombo(arr []int) [][]int {
 	for i := 0; i < poss; i++ {
 		rand.Seed(int64(time.Now().Second()))
 		j := rand.Intn(len(arr)-1)
+		l := rand.Intn(len(arr)-1)
 		fmt.Println(j,i)
-		arr[i], arr[j] = arr[j], arr[i]
+		arr[l], arr[j] = arr[j], arr[l]
 		if !InIntArrArr(all,arr) {
 			all = append(all,arr)
 		}
