@@ -3,6 +3,7 @@ package utils
 import (
 	"math/rand"
 	"time"
+	"fmt"
 )
 
 func AllCombo(arr []int) [][]int {
@@ -12,6 +13,7 @@ func AllCombo(arr []int) [][]int {
 	for i := 0; i < poss; i++ {
 		rand.Seed(int64(time.Now().Second()))
 		j := rand.Intn(len(arr)-1)
+		fmt.Println(j,i)
 		arr[i], arr[j] = arr[j], arr[i]
 		if !InIntArrArr(all,arr) {
 			all = append(all,arr)
