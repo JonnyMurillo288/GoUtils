@@ -16,12 +16,12 @@ func AllCombo(arr []int) [][]int {
 		j := rand.Intn(len(arr))
 		l := rand.Intn(len(arr))
 		arr[l], arr[j] = arr[j], arr[l]
-		if !InIntArrArr(all,arr) {
-			fmt.Println("all:",all)
-			fmt.Println("new:",new)
-			fmt.Println("arr",arr)
-			new = arr
-			all = append(all,new)
+		new = arr
+		fmt.Println("all:",all)
+		fmt.Println("new:",new)
+		fmt.Println("arr",arr)
+		all = append(all,new)
+		if !InIntArrArr(all,new) {
 			fmt.Println("all appended:",all)
 			time.Sleep(time.Second*5)
 		}
