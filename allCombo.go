@@ -24,6 +24,7 @@ func AllCombo(arr []int) [][]int {
 			all = append(all,new)
 			fmt.Println("all appended:",all)
 			time.Sleep(time.Second*5)
+			continue
 		}
 		i--
 	}
