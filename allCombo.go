@@ -15,6 +15,7 @@ func AllCombo(arr []int) [][]int {
 		j := rand.Intn(len(arr)-1)
 		l := rand.Intn(len(arr)-1)
 		arr[l], arr[j] = arr[j], arr[l]
+		fmt.Println(l,j)
 		fmt.Println(all)
 		fmt.Println(arr)
 		fmt.Print("\n\n")
