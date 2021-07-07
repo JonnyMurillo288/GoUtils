@@ -8,10 +8,10 @@ import (
 func AllCombo(arr []int) [][]int {
 
 	var all [][]int
-	poss := Factorial(len(arr))
+	poss := Factorial(len(arr))-1
 	for i := 0; i < poss; i++ {
 		rand.Seed(int64(time.Now().Second()))
-		j := rand.Intn(len(arr))-1
+		j := rand.Intn(len(arr))
 		arr[i], arr[j] = arr[j], arr[i]
 		if !InIntArrArr(all,arr) {
 			all = append(all,arr)
