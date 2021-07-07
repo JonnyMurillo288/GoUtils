@@ -9,17 +9,17 @@ import (
 func AllCombo(arr []int) [][]int {
 
 	var all [][]int
-	var new []int
 	poss := Factorial(len(arr))
 	for i := 0; i < poss; i++ {
 		rand.Seed(int64(time.Now().Nanosecond()))
 		j := rand.Intn(len(arr))
 		l := rand.Intn(len(arr))
 		arr[l], arr[j] = arr[j], arr[l]
-		new = arr
+		new := arr
 		fmt.Println("all:",all)
 		fmt.Println("new:",new)
 		fmt.Println("arr",arr)
+		fmt.Println("\n",i)
 		if !InIntArrArr(all,new) {
 			all = append(all,new)
 			fmt.Println("all appended:",all)
