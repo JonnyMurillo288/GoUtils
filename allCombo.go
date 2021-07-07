@@ -12,8 +12,8 @@ func AllCombo(arr []int) [][]int {
 	poss := Factorial(len(arr))
 	for i := 0; i < poss; i++ {
 		rand.Seed(int64(time.Now().Nanosecond()))
-		j := rand.Intn(len(arr)-1)
-		l := rand.Intn(len(arr)-1)
+		j := rand.Intn(len(arr))
+		l := rand.Intn(len(arr))
 		arr[l], arr[j] = arr[j], arr[l]
 		fmt.Println(l,j)
 		fmt.Println(all)
