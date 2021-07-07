@@ -14,22 +14,26 @@ func AllCombo(arr []int) [][]int {
 		rand.Seed(int64(time.Now().Nanosecond()))
 		j := rand.Intn(len(arr))
 		l := rand.Intn(len(arr))
-		arr[l], arr[j] = arr[j], arr[l]
-		new := arr
+		new := Switch(arr,j,l)
 		fmt.Println("all:",all)
 		fmt.Println("new:",new)
 		fmt.Println("arr",arr)
 		fmt.Println("\n",i)
 		if !InIntArrArr(all,new) {
-			newAll := append(all,new)
+			all = append(all,new)
 			fmt.Println("all appended:",all)
 			time.Sleep(time.Second*5)
-			all = newAll
+			arr = Switch(arr,j,l)
 			continue
 		}
 		i--
 	}
 	return all
+}
+
+func Switch(arr []int, j int, l int) []int {
+	arr[l], arr[j] = arr[j], arr[l]
+	return arr
 }
 
 func Factorial(num int) int {
