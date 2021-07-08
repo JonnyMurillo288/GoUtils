@@ -2,6 +2,7 @@ package utils
 
 type Graph struct {
 	Edges map[int][]int
+	Parent []int
 }
 
 // default is directed, if you want an undirected addEdge(v,w) then addEdge(w,v)
@@ -31,24 +32,23 @@ func (g *Graph) connected(v int, w int) bool {
 	return g.IsCyclic()
 }
 
-func (g *Graph) Union(p []int,v int, w int) []int {
-	p[v] = w
-	return p
+func (g *Graph) Union(v int, w int) {
+	g.Parent[v] = w
 }
 
 func (g *Graph) IsCyclic() bool {
-	var parent []int
+	g.Parent = []int{}
 	for i := 0; i < g.V(); i++ {
-		parent = append(parent,-1)
+		g.Parent = append(g.Parent,-1)
 	}
 	for i := 0; i < g.V(); i++ {
 		for _,j := range g.Edges[i] {
-			x := FindParent(parent,i)
-			y := FindParent(parent,j)
+			x := FindParent(g.Parent,i)
+			y := FindParent(g.Parent,j)
 			if x == y {
 				return true
 			}
-			parent = g.Union(parent,x,y)
+			g.Union(x,y)
 		}
 	}
 	return false
