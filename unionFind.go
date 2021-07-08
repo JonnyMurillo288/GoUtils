@@ -1,17 +1,17 @@
 package utils
 
 type Graph struct {
-	edges map[int][]int
+	Edges map[int][]int
 }
 
 // default is directed, if you want an undirected addEdge(v,w) then addEdge(w,v)
 func (g *Graph) AddEdge(v int, w int) {
-	g.edges[v] = append(g.edges[v],w)
+	g.Edges[v] = append(g.Edges[v],w)
 }
 
 func (g *Graph) V() int {
 	var len int
-	for _,_ = range g.edges {
+	for _,_ = range g.Edges {
 		len++
 	}
 	return len
@@ -36,7 +36,7 @@ func (g *Graph) IsCyclic() bool {
 		parent = append(parent,-1)
 	}
 	for i := 0; i < g.V(); i++ {
-		for _,j := range g.edges[i] {
+		for _,j := range g.Edges[i] {
 			x := FindParent(parent,i)
 			y := FindParent(parent,j)
 			if x == y {
