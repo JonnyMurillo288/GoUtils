@@ -25,7 +25,7 @@ func FindParent(p []int, v int) int {
 	}
 }
 
-func (g *utils.Graph) connected(v int, w int) bool {
+func (g *Graph) connected(v int, w int) bool {
 	// add to graph then check union
 	g.AddEdge(v,w)
 	return g.IsCyclic()
