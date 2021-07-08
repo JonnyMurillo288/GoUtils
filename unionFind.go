@@ -31,7 +31,7 @@ func (g *Graph) connected(v int, w int) bool {
 	return g.IsCyclic()
 }
 
-func Union(p []int,v int, w int) []int {
+func (g *Graph) Union(p []int,v int, w int) []int {
 	p[v] = w
 	return p
 }
@@ -48,7 +48,7 @@ func (g *Graph) IsCyclic() bool {
 			if x == y {
 				return true
 			}
-			Union(parent,x,y)
+			parent = g.Union(parent,x,y)
 		}
 	}
 	return false
