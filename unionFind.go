@@ -1,8 +1,9 @@
 package utils
 
+import utils "github.com/Jonnymurillo288/GoUtils"
+
 type Graph struct {
 	Edges map[int][]int
-	Parent []int
 }
 
 // default is directed, if you want an undirected addEdge(v,w) then addEdge(w,v)
@@ -26,29 +27,30 @@ func FindParent(p []int, v int) int {
 	}
 }
 
-func (g *Graph) connected(v int, w int) bool {
+func (g *utils.Graph) connected(v int, w int) bool {
 	// add to graph then check union
 	g.AddEdge(v,w)
 	return g.IsCyclic()
 }
 
-func (g *Graph) Union(v int, w int) {
-	g.Parent[v] = w
+func Union(p []int,v int, w int) []int {
+	p[v] = w
+	return p
 }
 
 func (g *Graph) IsCyclic() bool {
-	g.Parent = []int{}
+	var parent []int
 	for i := 0; i < g.V(); i++ {
-		g.Parent = append(g.Parent,-1)
+		parent = append(parent,-1)
 	}
 	for i := 0; i < g.V(); i++ {
 		for _,j := range g.Edges[i] {
-			x := FindParent(g.Parent,i)
-			y := FindParent(g.Parent,j)
+			x := FindParent(parent,i)
+			y := FindParent(parent,j)
 			if x == y {
 				return true
 			}
-			g.Union(x,y)
+			Union(parent,x,y)
 		}
 	}
 	return false
