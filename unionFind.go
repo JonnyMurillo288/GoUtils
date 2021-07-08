@@ -1,7 +1,5 @@
 package utils
 
-import utils "github.com/Jonnymurillo288/GoUtils"
-
 type Graph struct {
 	Edges map[int][]int
 }
