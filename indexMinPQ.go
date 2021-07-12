@@ -6,8 +6,12 @@ type IndexMinPQ struct {
 	Item []interface{} 
 }
 
-func NewIndexMinPQ() IndexMinPQ {
-	i := IndexMinPQ{}
+func NewIndexMinPQ(maxN int) IndexMinPQ {
+	i := IndexMinPQ{
+		PQ: make([]int,maxN),
+		QP: make([]int,maxN),
+		Item: make([]interface{}, maxN),
+	}
 	i.PQ = append(i.PQ,-1)
 	return i
 }
