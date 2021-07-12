@@ -1,6 +1,9 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 type IndexMinPQ struct {
 	PQ []int // binary heap 
@@ -36,11 +39,14 @@ func (i *IndexMinPQ) Less(k int, j int) bool {
 
 // exchange the value int k with 
 func (i *IndexMinPQ) Exch(k int, j int) {
+	log.Printf("\nEchangeing for %v - %v",k,j)
+	log.Printf("BEFORE EXCHANGE:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
 	swap := i.PQ[k]
 	i.PQ[k] = i.PQ[j] 
 	i.PQ[j] = swap
 	i.QP[i.PQ[k]] = k
 	i.QP[i.PQ[j]] = j
+	log.Printf("AFTER EXCHANGE:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
 }
 
 // sink down the heap
@@ -68,11 +74,15 @@ func (i *IndexMinPQ) Swim(k int) {
 }
 
 func (i *IndexMinPQ) Insert(v int, item interface{}) {
+	log.Println("Inserting to PQ",v)
 	N := i.size() - 1
 	i.QP[v] = N // last queue position for the new item
 	i.PQ[N] = v
 	i.Item[v] = item 
+	log.Println("QP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n==================================\n")
 	i.Swim(N) // swim up with the item we just added
+	log.Println("AFTER SWIMMING:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
+
 }
 
 func (i *IndexMinPQ) DecreaseKey(v int, item interface{}) {
@@ -91,6 +101,7 @@ func (i *IndexMinPQ) Contains(v int) bool {
 
 func (i *IndexMinPQ) DelMin() int {
 	N := i.size() - 1 
+	log.Println("Deleting min N is:",N)
 	min := i.PQ[1] // first value
 	i.Exch(1,N) // switch the last value with the first
 	i.Sink(1) // sink the max value back into its places after selecting the first
