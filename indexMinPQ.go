@@ -1,13 +1,19 @@
 package utils
 
 type IndexMinPQ struct {
-	Ind []int
+	PQ []int // binary heap 
+	QP []int // inverse: qp[pq[i]] = pq[qp[i]] = i
+	Item []interface{} 
 }
 
-func New() IndexMinPQ {
-	return IndexMinPQ{
-		Ind: make([]int,0),
+func NewIndexMinPQ() IndexMinPQ {
+	i := IndexMinPQ{
+		PQ: make([]int,0),
+		QP: make([]int,0),
+		Item: make([]interface{}, 0),
 	}
+	i.PQ[0] = -1
+	return i
 }
 
 /*
@@ -18,22 +24,25 @@ private boolean less(int i, int j)
 */
 
 func compareTo(i int, j int) int {
-	return i-1
+	return i-j
 }
 
-func (i *IndexMinPQ) Less(ind int, j int) bool {
-	return compareTo(i.Ind[ind],i.Ind[j]) < 0
+func (i *IndexMinPQ) Less(k int, j int) bool {
+	return compareTo(i.PQ[k],i.PQ[j]) < 0
 }
 
-func (i *IndexMinPQ) Exch(ind int, j int) {
-	t := i.Ind[ind]
-	i.Ind[ind] = i.Ind[j]
-	i.Ind[j] = t
+// exchange the value int k with 
+func (i *IndexMinPQ) Exch(k int, j int) {
+	swap := i.PQ[k]
+	i.PQ[k] = i.PQ[j] 
+	i.PQ[j] = swap
+	i.QP[i.PQ[k]] = k
+	i.QP[i.PQ[j]] = j
 }
 
 // sink down the heap
 func (i *IndexMinPQ) Sink(k int) {
-	var N = len(i.Ind)
+	var N = len(i.PQ)
 	for 2* k <= N {
 		j := 2*k
 		if j < N && i.Less(j,j+1) {
@@ -55,19 +64,22 @@ func (i *IndexMinPQ) Swim(k int) {
 	}
 }
 
-func (i *IndexMinPQ) Insert(v int) {
-	k := i.size()
-	i.Ind = append(i.Ind, v)
-	i.Swim(k)
+func (i *IndexMinPQ) Insert(v int, item interface{}) {
+	N := i.size()
+	i.QP[v] = N // last queue position for the new item
+	i.PQ[N] = v
+	i.Item[v] = item 
+	i.Swim(N) // swim up with the item we just added
 }
 
-func (i *IndexMinPQ) DecreaseKey(v int, key int) {
-
+func (i *IndexMinPQ) DecreaseKey(v int, item interface{}) {
+	i.Item[v] = item // add this item to the vertice v
+	i.Swim(i.QP[v]) // swim the queue position up
 }
 
 func (i *IndexMinPQ) Contains(v int) bool {
-	for _,a := range i.Ind {
-		if v == a {
+	for k,item := range i.Item {
+		if v == k && item != nil{
 			return true
 		}
 	}
@@ -75,20 +87,21 @@ func (i *IndexMinPQ) Contains(v int) bool {
 }
 
 func (i *IndexMinPQ) DelMin() int {
-	N := i.size()-1
-	min := i.Ind[N]
-	i.Exch(1,N)
-	i.Swim(N)
-	i.Ind = i.Ind[1:]
+	N := i.size() 
+	min := i.PQ[1] // first value
+	i.Exch(1,N) // switch the last value with the first
+	i.Sink(1) // sink the max value back into its places after selecting the first
+	i.Item[i.PQ[N-1]] = nil // shrink the Item list by one
+	i.QP[i.PQ[N-1]] = -1 // shrink the QP by one
 	return min
 }
 
 func (i *IndexMinPQ) size() int {
-	return len(i.Ind)
+	return len(i.PQ)
 }
 
 func (i *IndexMinPQ) IsEmpty() bool {
-	return len(i.Ind) == 0
+	return len(i.PQ) == 0
 }
 
 
