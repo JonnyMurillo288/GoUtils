@@ -1,5 +1,7 @@
 package utils
 
+import "fmt"
+
 type IndexMinPQ struct {
 	PQ []int // binary heap 
 	QP []int // inverse: qp[pq[i]] = pq[qp[i]] = i
@@ -7,6 +9,7 @@ type IndexMinPQ struct {
 }
 
 func NewIndexMinPQ(maxN int) IndexMinPQ {
+	fmt.Println("Hi")
 	i := IndexMinPQ{
 		PQ: make([]int,maxN),
 		QP: make([]int,maxN),
@@ -65,7 +68,7 @@ func (i *IndexMinPQ) Swim(k int) {
 }
 
 func (i *IndexMinPQ) Insert(v int, item interface{}) {
-	N := i.size()
+	N := i.size() - 1
 	i.QP[v] = N // last queue position for the new item
 	i.PQ[N] = v
 	i.Item[v] = item 
@@ -87,7 +90,7 @@ func (i *IndexMinPQ) Contains(v int) bool {
 }
 
 func (i *IndexMinPQ) DelMin() int {
-	N := i.size() 
+	N := i.size() - 1 
 	min := i.PQ[1] // first value
 	i.Exch(1,N) // switch the last value with the first
 	i.Sink(1) // sink the max value back into its places after selecting the first
