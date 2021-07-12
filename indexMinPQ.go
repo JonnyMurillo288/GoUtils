@@ -8,11 +8,11 @@ type IndexMinPQ struct {
 
 func NewIndexMinPQ() IndexMinPQ {
 	i := IndexMinPQ{
-		PQ: make([]int,0),
-		QP: make([]int,0),
-		Item: make([]interface{}, 0),
+		PQ: []int{},
+		QP: []int{},
+		Item: []interface{}{},
 	}
-	i.PQ[0] = -1
+	i.PQ = append(i.PQ,-1)
 	return i
 }
 
