@@ -18,7 +18,10 @@ func NewIndexMinPQ(maxN int) IndexMinPQ {
 		QP: make([]int,maxN),
 		Item: make([]float64, maxN),
 	}
-	i.PQ = append(i.PQ,-1)
+	for j := 0; j < len(i.PQ); j++ {
+		i.PQ[j] = -1
+		i.QP[j] = -1
+	}
 	return i
 }
 
