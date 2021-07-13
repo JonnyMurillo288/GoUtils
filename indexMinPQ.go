@@ -104,7 +104,7 @@ func (i *IndexMinPQ) resize() {
 
 func (i *IndexMinPQ) DelMin() int {
 	N := i.size() - 1 
-	if N == 1 {
+	if N == 0 {
 		return -1
 	}
 	log.Println("Deleting min N is:",N)
