@@ -32,12 +32,12 @@ private boolean less(int i, int j)
   {  Key t = pq[i]; pq[i] = pq[j]; pq[j] = t;  }
 */
 
-func compareTo(i int, j int) bool {
+func compareTo(i float64, j float64) bool {
 	return i >= j
 }
 
 func (i *IndexMinPQ) greater(k int, j int) bool {
-	return compareTo(i.PQ[k],i.PQ[j])
+	return compareTo(i.Item[k],i.Item[j])
 }
 
 // exchange the value int k with 
