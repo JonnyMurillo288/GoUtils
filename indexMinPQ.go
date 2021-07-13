@@ -77,6 +77,7 @@ func (i *IndexMinPQ) Swim(k int) {
 
 func (i *IndexMinPQ) Insert(v int, item float64) {
 	log.Println("Inserting to PQ",v)
+	i.incSize() 
 	N := len(i.PQ) - 1
 	log.Println("Len of PQ:",len(i.PQ))
 	i.QP[v] = N // last queue position for the new item
@@ -101,6 +102,11 @@ func (i *IndexMinPQ) Contains(v int) bool {
 func (i *IndexMinPQ) resize() {
 	n := len(i.PQ)-2
 	i.PQ = i.PQ[0:n]
+}
+
+// increase the size of the PQ when inserting value
+func (i *IndexMinPQ) incSize() {
+	i.PQ = append(i.PQ,0)
 }
 
 func (i *IndexMinPQ) DelMin() int {
