@@ -109,7 +109,7 @@ func (i *IndexMinPQ) DelMin() int {
 	i.Exch(1,N) // switch the last value with the first
 	i.resize() // reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
-	i.QP[i.PQ[N-1]] = -1 // shrink the QP by one
+	i.QP[min] = -1 // shrink the QP by one
 	return min
 }
 
