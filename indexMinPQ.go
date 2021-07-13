@@ -91,8 +91,8 @@ func (i *IndexMinPQ) DecreaseKey(v int, item float64) {
 }
 
 func (i *IndexMinPQ) Contains(v int) bool {
-	for k,item := range i.Item {
-		if v == k && item != nil{
+	for k,_ := range i.Item {
+		if v == k{
 			return true
 		}
 	}
@@ -112,7 +112,6 @@ func (i *IndexMinPQ) DelMin() int {
 	i.Exch(1,N) // switch the last value with the first
 	i.resize() // reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
-	i.Item[i.PQ[N-1]] = nil // shrink the Item list by one
 	i.QP[i.PQ[N-1]] = -1 // shrink the QP by one
 	return min
 }
@@ -162,14 +161,14 @@ func (pq PriorityQueue) Swap(i, j int) {
 	pq[j].index = j
 }
 
-func (pq *PriorityQueue) Push(x interface{}) {
+func (pq *PriorityQueue) Push(x float64) {
 	n := len(*pq)
 	item := x.(*Item)
 	item.index = n
 	*pq = append(*pq, item)
 }
 
-func (pq *PriorityQueue) Pop() interface{} {
+func (pq *PriorityQueue) Pop() float64 {
 	old := *pq
 	n := len(old)
 	item := old[n-1]
