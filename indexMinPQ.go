@@ -14,9 +14,9 @@ type IndexMinPQ struct {
 func NewIndexMinPQ(maxN int) IndexMinPQ {
 	fmt.Println("Hi")
 	i := IndexMinPQ{
-		PQ: make([]int,0,maxN),
-		QP: make([]int,0,maxN),
-		Item: make([]interface{},0, maxN),
+		PQ: make([]int,maxN),
+		QP: make([]int,maxN),
+		Item: make([]interface{}, maxN),
 	}
 	i.PQ = append(i.PQ,-1)
 	return i
