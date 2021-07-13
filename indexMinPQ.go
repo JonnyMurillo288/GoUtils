@@ -29,12 +29,12 @@ private boolean less(int i, int j)
   {  Key t = pq[i]; pq[i] = pq[j]; pq[j] = t;  }
 */
 
-func compareTo(i int, j int) int {
-	return i-j
+func compareTo(i int, j int) bool {
+	return i >= j
 }
 
-func (i *IndexMinPQ) Less(k int, j int) bool {
-	return compareTo(i.PQ[k],i.PQ[j]) < 0
+func (i *IndexMinPQ) greater(k int, j int) bool {
+	return compareTo(i.PQ[k],i.PQ[j])
 }
 
 // exchange the value int k with 
@@ -54,10 +54,10 @@ func (i *IndexMinPQ) Sink(k int) {
 	var N = len(i.PQ)
 	for 2* k <= N {
 		j := 2*k
-		if j < N && i.Less(j,j+1) {
+		if j < N && i.greater(j,j+1) {
 			j++
 		} 
-		if !i.Less(k,j) {
+		if !i.greater(k,j) {
 			break
 		}
 		i.Exch(k,j)
@@ -67,7 +67,7 @@ func (i *IndexMinPQ) Sink(k int) {
 
 // swim up the heap
 func (i *IndexMinPQ) Swim(k int) {
-	for k < 1 && i.Less(k/2,k) {
+	for k < 1 && i.greater(k/2,k) {
 		i.Exch(k/2,k)
 		k = k/2
 	}
