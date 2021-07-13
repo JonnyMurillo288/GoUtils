@@ -103,8 +103,6 @@ func (i *IndexMinPQ) Contains(v int) bool {
 func (i *IndexMinPQ) resize() {
 	n := i.size()
 	i.PQ = i.PQ[0:n-1]
-	i.QP = i.QP[0:n-1]
-	i.Item = i.Item[0:n-1]
 }
 
 func (i *IndexMinPQ) DelMin() int {
