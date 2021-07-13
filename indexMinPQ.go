@@ -32,7 +32,7 @@ private boolean less(int i, int j)
 */
 
 func compareTo(i float64, j float64) bool {
-	return i >= j
+	return i > j
 }
 
 func (i *IndexMinPQ) greater(k int, j int) bool {
