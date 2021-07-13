@@ -8,7 +8,7 @@ import (
 type IndexMinPQ struct {
 	PQ []int // binary heap 
 	QP []int // inverse: qp[pq[i]] = pq[qp[i]] = i
-	Item []interface{} // Item contains the weight on how we want to sort the PQ
+	Item []float64 // Item contains the weight on how we want to sort the PQ
 }
 
 func NewIndexMinPQ(maxN int) IndexMinPQ {
@@ -16,7 +16,7 @@ func NewIndexMinPQ(maxN int) IndexMinPQ {
 	i := IndexMinPQ{
 		PQ: make([]int,maxN),
 		QP: make([]int,maxN),
-		Item: make([]interface{}, maxN),
+		Item: make([]float64, maxN),
 	}
 	i.PQ = append(i.PQ,-1)
 	return i
@@ -73,7 +73,7 @@ func (i *IndexMinPQ) Swim(k int) {
 	}
 }
 
-func (i *IndexMinPQ) Insert(v int, item interface{}) {
+func (i *IndexMinPQ) Insert(v int, item float64) {
 	log.Println("Inserting to PQ",v)
 	N := i.size() - 1
 	i.QP[v] = N // last queue position for the new item
@@ -85,7 +85,7 @@ func (i *IndexMinPQ) Insert(v int, item interface{}) {
 
 }
 
-func (i *IndexMinPQ) DecreaseKey(v int, item interface{}) {
+func (i *IndexMinPQ) DecreaseKey(v int, item float64) {
 	i.Item[v] = item // add this item to the vertice v
 	i.Swim(i.QP[v]) // swim the queue position up
 }
