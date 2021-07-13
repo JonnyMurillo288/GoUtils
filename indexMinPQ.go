@@ -112,6 +112,9 @@ func (i *IndexMinPQ) incSize() {
 func (i *IndexMinPQ) DelMin() int {
 	N := len(i.PQ) - 1 
 	log.Println("Deleting min N is:",N)
+	if N == -1 {
+		return -1
+	}
 	min := i.PQ[1] // first value
 	i.Exch(1,N) // switch the last value with the first
 	i.resize() // reduce the length of the arrays and cut off the min value
