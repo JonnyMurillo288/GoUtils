@@ -78,8 +78,9 @@ func (i *IndexMinPQ) Swim(k int) {
 func (i *IndexMinPQ) Insert(v int, item float64) {
 	log.Println("Inserting to PQ",v)
 	N := len(i.PQ) - 1
+	log.Println("Len of PQ:",len(i.PQ))
 	i.QP[v] = N // last queue position for the new item
-	i.PQ[len(i.PQ)-1] = v
+	i.PQ[len(i.PQ)] = v
 	i.Item[v] = item 
 	log.Print("QP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n==================================\n")
 	i.Swim(N) // swim up with the item we just added
@@ -98,8 +99,8 @@ func (i *IndexMinPQ) Contains(v int) bool {
 
 // resize the length of pq, qp, item arrays
 func (i *IndexMinPQ) resize() {
-	n := len(i.PQ)-1
-	i.PQ = i.PQ[0:n-1]
+	n := len(i.PQ)-2
+	i.PQ = i.PQ[0:n]
 }
 
 func (i *IndexMinPQ) DelMin() int {
@@ -109,7 +110,7 @@ func (i *IndexMinPQ) DelMin() int {
 	i.Exch(1,N) // switch the last value with the first
 	i.resize() // reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
-	i.QP[min] = -1 // shrink the QP by one
+	i.QP[min] = -1 // remove the QP of the min
 	return min
 }
 
