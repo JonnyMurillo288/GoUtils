@@ -115,7 +115,7 @@ func (i *IndexMinPQ) DelMin() int {
 
 func (i *IndexMinPQ) size() int {
 	fmt.Println("Length of PQ:",len(i.PQ))
-	return len(i.QP) - 1
+	return len(i.QP) 
 }
 
 func (i *IndexMinPQ) IsEmpty() bool {
