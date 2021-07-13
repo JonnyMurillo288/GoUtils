@@ -95,6 +95,7 @@ func (i *IndexMinPQ) DecreaseKey(v int, item float64) {
 }
 
 func (i *IndexMinPQ) Contains(v int) bool {
+	fmt.Println("Comparing v: %v to %v\nWHOLE LIST: %v",v, i.QP[v],i.QP)
 	return i.QP[v] != -1
 }
 
