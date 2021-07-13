@@ -6,6 +6,7 @@ import (
 )
 
 type IndexMinPQ struct {
+	N int
 	PQ []int // binary heap 
 	QP []int // inverse: qp[pq[i]] = pq[qp[i]] = i
 	Item []float64 // Item contains the weight on how we want to sort the PQ
@@ -14,9 +15,10 @@ type IndexMinPQ struct {
 func NewIndexMinPQ(maxN int) IndexMinPQ {
 	fmt.Println("Hi")
 	i := IndexMinPQ{
-		PQ: make([]int,maxN),
-		QP: make([]int,maxN+1),
-		Item: make([]float64, maxN+1),
+		N: 0,
+		PQ: make([]int,0,maxN),
+		QP: make([]int,0,maxN+1),
+		Item: make([]float64,0, maxN+1),
 	}
 	for j := 0; j < len(i.PQ); j++ {
 		i.QP[j] = -1
@@ -77,14 +79,13 @@ func (i *IndexMinPQ) Swim(k int) {
 
 func (i *IndexMinPQ) Insert(v int, item float64) {
 	log.Println("Inserting to PQ",v)
-	i.incSize() 
-	N := len(i.PQ) - 1
+	i.N++
 	log.Println("Len of PQ:",len(i.PQ))
-	i.QP[v] = N // last queue position for the new item
-	i.PQ[len(i.PQ)-1] = v
+	i.QP[v] = i.N // last queue position for the new item
+	i.PQ[i.N] = v
 	i.Item[v] = item 
 	log.Print("QP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n==================================\n")
-	i.Swim(N) // swim up with the item we just added
+	i.Swim(i.N) // swim up with the item we just added
 	log.Print("AFTER SWIMMING:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
 
 }
@@ -99,34 +100,26 @@ func (i *IndexMinPQ) Contains(v int) bool {
 	return i.QP[v] != -1
 }
 
-// resize the length of pq, qp, item arrays
-func (i *IndexMinPQ) resize() {
-	n := len(i.PQ)-2
-	i.PQ = i.PQ[0:n]
-}
-
 // increase the size of the PQ when inserting value
 func (i *IndexMinPQ) incSize() {
 	i.PQ = append(i.PQ,0)
 }
 
 func (i *IndexMinPQ) DelMin() int {
-	N := len(i.PQ) - 1 
-	log.Println("Deleting min N is:",N)
-	if N == -1 {
+	log.Println("Deleting min N is:",i.N)
+	if i.N == -1 {
 		return -1
 	}
 	min := i.PQ[1] // first value
-	i.Exch(1,N) // switch the last value with the first
-	i.resize() // reduce the length of the arrays and cut off the min value
+	i.Exch(1,i.N--) // switch the last value with the first
+	// reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
 	i.QP[min] = -1 // remove the QP of the min
 	return min
 }
 
 func (i *IndexMinPQ) size() int {
-	fmt.Println("Length of PQ:",len(i.PQ))
-	return len(i.PQ)
+	return i.N
 }
 
 func (i *IndexMinPQ) IsEmpty() bool {
