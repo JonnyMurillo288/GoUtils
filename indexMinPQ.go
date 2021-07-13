@@ -21,7 +21,6 @@ func NewIndexMinPQ(maxN int) IndexMinPQ {
 	for j := 0; j < len(i.PQ); j++ {
 		i.QP[j] = -1
 	}
-	i.PQ = append(i.PQ,-1)
 	return i
 }
 
@@ -116,7 +115,7 @@ func (i *IndexMinPQ) DelMin() int {
 
 func (i *IndexMinPQ) size() int {
 	fmt.Println("Length of PQ:",len(i.PQ))
-	return len(i.QP) -1
+	return len(i.QP)
 }
 
 func (i *IndexMinPQ) IsEmpty() bool {
