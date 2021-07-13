@@ -80,7 +80,7 @@ func (i *IndexMinPQ) Insert(v int, item float64) {
 	N := len(i.PQ) - 1
 	log.Println("Len of PQ:",len(i.PQ))
 	i.QP[v] = N // last queue position for the new item
-	i.PQ[len(i.PQ)] = v
+	i.PQ[len(i.PQ)-1] = v
 	i.Item[v] = item 
 	log.Print("QP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n==================================\n")
 	i.Swim(N) // swim up with the item we just added
