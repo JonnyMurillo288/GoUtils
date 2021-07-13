@@ -111,7 +111,8 @@ func (i *IndexMinPQ) DelMin() int {
 		return -1
 	}
 	min := i.PQ[1] // first value
-	i.Exch(1,i.N--) // switch the last value with the first
+	i.N--
+	i.Exch(1,i.N) // switch the last value with the first
 	// reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
 	i.QP[min] = -1 // remove the QP of the min
