@@ -94,13 +94,7 @@ func (i *IndexMinPQ) DecreaseKey(v int, item float64) {
 }
 
 func (i *IndexMinPQ) Contains(v int) bool {
-	for k,_ := range i.Item {
-		if v == k{
-			fmt.Println("K == V:",k,v)
-			return true
-		}
-	}
-	return false
+	return i.QP[v] != -1
 }
 
 // resize the length of pq, qp, item arrays
