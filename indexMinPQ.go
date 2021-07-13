@@ -126,7 +126,7 @@ func (i *IndexMinPQ) size() int {
 }
 
 func (i *IndexMinPQ) IsEmpty() bool {
-	return len(i.PQ) == 0
+	return len(i.QP) == 0
 }
 
 
