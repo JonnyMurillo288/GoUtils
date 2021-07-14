@@ -32,23 +32,23 @@ private boolean less(int i, int j)
 */
 
 func compareTo(i float64, j float64) bool {
+	log.Printf("CompareTo: %v > %v",i,j)
 	return i > j
 }
 
 func (i *IndexMinPQ) greater(k int, j int) bool {
+	log.Printf("\nComparing %v - %v in %v\n",k,j,i.Item)
 	return compareTo(i.Item[k],i.Item[j])
 }
 
 // exchange the value int k with 
 func (i *IndexMinPQ) Exch(k int, j int) {
 	log.Printf("\nEchanging for %v - %v",k,j)
-	log.Print("BEFORE EXCHANGE:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
 	swap := i.PQ[k]
 	i.PQ[k] = i.PQ[j] 
 	i.PQ[j] = swap
 	i.QP[i.PQ[k]] = k
 	i.QP[i.PQ[j]] = j
-	log.Print("AFTER EXCHANGE:\nQP:",i.QP,"\nPQ:",i.PQ,"\nItem:",i.Item,"\n")
 }
 
 // sink down the heap
@@ -77,11 +77,8 @@ func (i *IndexMinPQ) Swim(k int) {
 
 func (i *IndexMinPQ) Insert(v int, item float64) {
 	log.Println("Inserting to PQ",v)
-	log.Println("PQ BEFORE INCREASING SIZE",i.PQ)
 	i.incSize() 
-	log.Println("PQ AFTER INCREASING SIZE",i.PQ)
 	N := len(i.PQ) - 1
-	log.Println("Len of PQ:",len(i.PQ))
 	i.QP[v] = N // last queue position for the new item
 	i.PQ[len(i.PQ)-1] = v
 	i.Item[v] = item 
@@ -97,12 +94,12 @@ func (i *IndexMinPQ) DecreaseKey(v int, item float64) {
 }
 
 func (i *IndexMinPQ) Contains(v int) bool {
-	fmt.Printf("Comparing v: %v to %v\nWHOLE LIST: %v",v, i.QP[v],i.QP)
+	log.Printf("\nChecking if QP[%v] = %v",v,i.QP[v])
 	return i.QP[v] != -1
 }
 
 // resize the length of pq, qp, item arrays
-func (i *IndexMinPQ) resize() {
+func (i *IndexMinPQ) desize() {
 	n := len(i.PQ)-2
 	i.PQ = i.PQ[0:n]
 }
@@ -116,8 +113,9 @@ func (i *IndexMinPQ) DelMin() int {
 	N := len(i.PQ) - 1 
 	log.Println("Deleting min N is:",N)
 	min := i.PQ[1] // first value
+	log.Printf("\nPQ: %v\nMin Value: %v",i.PQ,min)
 	i.Exch(1,N) // switch the last value with the first
-	i.resize() // reduce the length of the arrays and cut off the min value
+	i.desize() // reduce the length of the arrays and cut off the min value
 	i.Sink(1) // sink the max value back into its places after selecting the first
 	i.QP[min] = -1 // remove the QP of the min
 	return min
