@@ -70,7 +70,7 @@ func (i *IndexMinPQ) Sink(k int) {
 // swim up the heap
 func (i *IndexMinPQ) Swim(k int) {
 	for k > 1 && i.greater(k/2,k) {
-		i.Exch(k/2,k)
+		i.Exch(k,k/2)
 		k = k/2
 	}
 }
