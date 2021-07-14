@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -15,17 +16,18 @@ import (
 func TestIndexMinPQ(t *testing.T) {
 	g := graphs.NewWeightDigraph(0)
 
-	file, err := os.Create("./testDWG.txt")
+	file, err := os.Open("./testDWG.txt")
 	if err != nil {
 		panic(err)
 	}
 	scanner := bufio.NewScanner(file)
-
+	var ind int
 	for scanner.Scan() {
+		ind++
 		line := strings.Split(scanner.Text()," ")
 		p1, err := strconv.Atoi(line[0])
 		if err != nil {
-			panic(err)
+			continue
 		}
 		p2, _ := strconv.Atoi(line[1])
 		w, _ := strconv.ParseFloat(line[2],64)
@@ -36,6 +38,10 @@ func TestIndexMinPQ(t *testing.T) {
 		}
 		g.AddEdge(e)
 	}
-	
-	
+	fmt.Println(g.Adj)
+	d := graphs.NewDijkstras(g,0)
+	for i,edge := range d.EdgeTo {
+		fmt.Printf("%v --> %v : %v\n",i,edge,d.DistTo[i])
+	}
+
 }
